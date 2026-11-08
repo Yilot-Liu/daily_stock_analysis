@@ -1,11 +1,6 @@
 name: 每日股票分析
 
 on:
-  # 一次性运行测试：后续将移除这个 push 触发器
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/00-daily-analysis.yml'
   # 定时触发 - 美股收盘后 1.5-2.5 小时（UTC 22:30；北京时间次日 06:30）
   schedule:
     - cron: '30 22 * * 1-5'    # 美股周一至周五收盘后，夏令时纽约18:30，冬令时17:30
@@ -478,9 +473,6 @@ jobs:
 
           # 判断运行模式
           MODE="${{ github.event.inputs.mode || 'full' }}"
-          if [ "${{ github.event_name }}" = "push" ]; then
-            MODE="stocks-only"
-          fi
           
           echo "=========================================="
           echo "🚀 A股自选股智能分析系统"
